@@ -32,13 +32,30 @@ MongoClient.connect('mongodb://localhost:27017/TodoApp', (err, client) => {
     //     console.log(JSON.stringify(res.ops, undefined, 2));
     // });
 
-    db.collection('Users').find({
-        _id: new ObjectID('5b61a2218b75510cb4f609a4')
-    }).toArray().then((docs) => {
-        console.log('Users');
-        console.log(JSON.stringify(docs, undefined, 2));
-    }, (err) => {
-        console.log('Unable to fetch', err);
+    // db.collection('Users').find({
+    //     _id: new ObjectID('5b61a2218b75510cb4f609a4')
+    // }).toArray().then((docs) => {
+    //     console.log('Users');
+    //     console.log(JSON.stringify(docs, undefined, 2));
+    // }, (err) => {
+    //     console.log('Unable to fetch', err);
+    // });
+
+    // db.collection('Users').findOneAndDelete({ _id: new ObjectID('5b646abc320cb1a491f34cde')}).then((res) => {
+    //     console.log(res);
+    // });
+
+    db.collection('Users').findOneAndUpdate({
+        _id: new ObjectID('5b646a9c320cb1a491f34cd2')
+    }, {
+        $set: {
+            location: 'Sydney',
+            age: 23
+        }
+    }, {
+        returnOriginal: false
+    }).then((res) => {
+        console.log(res);
     });
 
     client.close();
