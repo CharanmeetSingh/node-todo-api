@@ -7,11 +7,12 @@ const _ = require('lodash');
 let {mongoose} = require('./db/mongoose');
 let {Todo} = require('./models/todo');
 let {User} = require('./models/user');
+let {authenticate} = require('./middleware/authenticate');
 
 let app = express();
 const port = process.env.PORT || 3000;
-
 app.use(bodyParser.json());
+
 app.post('/todos', (req, res) => {
     let todo = new Todo({
         text: req.body.text
@@ -104,6 +105,10 @@ app.post('/users', (req, res) => {
     }).catch((e) => {
     	res.status(400).send(e);
     });
+});
+
+app.get('/users/me', authenticate, (req, res) => {
+    res.send(req.user);
 });
 
 app.listen(port, () => {
